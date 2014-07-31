@@ -1,5 +1,4 @@
-(ns elo-sport.core
-  (:require [clojure.string :as str]))
+(ns elo-sport.score)
 
 
 (defn new-score [current-score game-score expected-score]

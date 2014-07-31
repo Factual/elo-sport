@@ -1,22 +1,19 @@
 (ns elo-sport.server
-  (:use [ring.middleware params keyword-params resource session]
-        [compojure.core])
-  (:require [compojure.route :as route]
-            [elo-sport.core  :as elo]))
+  (:use  [ring.middleware params keyword-params resource session])
+  (:require [compojure.core  :refer :all]
+            [compojure.route :as route]
+            [elo-sport.score :as score]
+            [elo-sport.user  :as user]))
 
 (defn exception-str
   [e]
   (with-out-str (.printStackTrace e (java.io.PrintWriter. *out*))))
 
-(defn chat-session-id
-  [req]
-  (:chat-session-id (:session req)))
-
-#_(defn say-something
+#_(defn foo
   [{:keys [params] :as req}]
   (try
     {:status 200
-     :body   (str (elo/query (:input params) (chat-session-id req)))}
+     :body   (str nil)}
     (catch Exception e
       {:status 500
        :body   (exception-str e)})))
@@ -28,19 +25,20 @@
 
 (defn login-handler
   [{:keys [params] :as req}]
-  (let [session (if (contains? req :session)
-                  (:session req)
-                  (new-session (:username params)))]
-    {:status 200
-     :body (str session)
-     :session session}))
+  (let [username (:username params)
+        session (:session req)]
+    (if (and session (= username (:username session)))
+      {:status 200
+       :body "Already logged in."}
+      {:status 200
+       :body "Logged in."
+       :session (new-session username)})))
 
 (defn hello-handler
   [{:keys [params] :as req}]
   (let [session (:session req)]
     {:status 200
-     :body (str "Current session username: " (:username (:session req)))
-     :session session}))
+     :body (str "Current session username: " (get-in req [:session :username]))}))
 
 (defroutes elo-handlers
   (POST "/login" [] login-handler)
