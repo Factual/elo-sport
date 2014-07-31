@@ -37,7 +37,7 @@
   [{:keys [params] :as req}]
   (let [session (new-session (:username params))]
     {:status 200
-     :body (str (:username (:session req)))
+     :body (str "Current session username: " (:username (:session req)))
      :session session}))
 
 (defroutes elo-handlers
