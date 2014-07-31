@@ -1,5 +1,5 @@
-(ns eliza.responder.nonsense
-  (:require [eliza.register :refer [register-responder!]]
+(ns elo-sport.responder.nonsense
+  (:require [elo-sport.register :refer [register-responder!]]
             [clojure.string :as string]))
 
 (def responses

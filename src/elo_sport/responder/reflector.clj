@@ -1,5 +1,5 @@
-(ns eliza.responder.reflector
-  (:require [eliza.register :refer [register-responder!]]
+(ns elo-sport.responder.reflector
+  (:require [elo-sport.register :refer [register-responder!]]
             [clojure.string :as str]))
 
 (def reflect-input

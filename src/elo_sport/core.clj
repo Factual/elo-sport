@@ -1,12 +1,12 @@
-(ns eliza.core
-  (:require [eliza.register :refer [responders]]
-            [eliza.responder.nonsense]
-            [eliza.responder.sleeper]
-            [eliza.responder.bored]
-            [eliza.responder.reflector]
-            [eliza.responder.delegator]
-            [eliza.history    :refer [add-to-history!]]
-            [eliza.middleware :refer [tokenize is-question?]]
+(ns elo-sport.core
+  (:require [elo-sport.register :refer [responders]]
+            [elo-sport.responder.nonsense]
+            [elo-sport.responder.sleeper]
+            [elo-sport.responder.bored]
+            [elo-sport.responder.reflector]
+            [elo-sport.responder.delegator]
+            [elo-sport.history    :refer [add-to-history!]]
+            [elo-sport.middleware :refer [tokenize is-question?]]
             [clojure.string :as str]))
 
 (defn analyzers [m]

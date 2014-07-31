@@ -1,4 +1,4 @@
-(ns eliza.middleware
+(ns elo-sport.middleware
   (:require [clojure.string :as s]))
 
 (defn tokenize [m]

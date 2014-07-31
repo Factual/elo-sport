@@ -1,5 +1,5 @@
-(ns eliza.responders.api-based.crunchbase
-  (:use eliza.responders.api-based.base))
+(ns elo-sport.responders.api-based.crunchbase
+  (:use elo-sport.responders.api-based.base))
 
 ;; TODO: in core, require this namespace
 

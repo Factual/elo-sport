@@ -1,4 +1,4 @@
-(ns eliza.register)
+(ns elo-sport.register)
 
 (def responders (atom {}))
 

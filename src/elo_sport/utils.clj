@@ -1,6 +1,6 @@
-(ns eliza.utils
+(ns elo-sport.utils
   (:require [clojure.string :as str]
-            [eliza.history :refer [history]]))
+            [elo-sport.history :refer [history]]))
 
 (defn canon-str [s]
   (str/replace (str/upper-case s) #"[^A-Z]" ""))

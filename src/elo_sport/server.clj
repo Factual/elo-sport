@@ -1,8 +1,8 @@
-(ns eliza.server
+(ns elo-sport.server
   (:use [ring.middleware params keyword-params resource session]
         [compojure.core])
   (:require [compojure.route :as route]
-            [eliza.core      :as eliza]))
+            [elo-sport.core      :as elo]))
 
 (defn exception-str
   [e]
@@ -16,12 +16,12 @@
   [{:keys [params] :as req}]
   (try
     {:status 200
-     :body   (str (eliza/query (:input params) (chat-session-id req)))}
+     :body   (str (elo/query (:input params) (chat-session-id req)))}
     (catch Exception e
       {:status 500
        :body   (exception-str e)})))
 
-(defroutes eliza-handlers
+(defroutes elo-handlers
   (POST "/say" [] say-something)
   (route/not-found "No such thing."))
 
@@ -44,7 +44,7 @@
         (assoc response :session {:chat-session-id (new-chat-session)})))))
 
 (def app
-  (-> eliza-handlers
+  (-> elo-handlers
       (wrap-resource "public")
       wrap-make-session-if-none
       wrap-session

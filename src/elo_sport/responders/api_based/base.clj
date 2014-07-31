@@ -1,5 +1,5 @@
-(ns eliza.responders.api-based.base
-  (:require [eliza.register :refer [register-responder]]))
+(ns elo-sport.responders.api-based.base
+  (:require [elo-sport.register :refer [register-responder]]))
 
 
 ;; some helpers

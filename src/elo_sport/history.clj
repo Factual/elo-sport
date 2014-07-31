@@ -1,4 +1,4 @@
-(ns eliza.history)
+(ns elo-sport.history)
 
 ;; pairs of entry/response maps
 (def history-map (atom {}))

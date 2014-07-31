@@ -1,5 +1,5 @@
-(ns eliza.responder.default
-  (:require [eliza.register :refer [register-responder!]]))
+(ns elo-sport.responder.default
+  (:require [elo-sport.register :refer [register-responder!]]))
 
 (defn default-responder [input-map]
   (let [question-responses  ["I have no idea."

@@ -1,5 +1,5 @@
-(ns eliza.responder.delegator
-  (:require [eliza.register :refer [register-responder!]]
+(ns elo-sport.responder.delegator
+  (:require [elo-sport.register :refer [register-responder!]]
             [clojure.string :as str]))
 
 (def people ["Will" "Aaron" "Avram" "Evan" "Daniel" "Guru"])

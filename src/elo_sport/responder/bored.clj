@@ -1,6 +1,6 @@
-(ns eliza.responder.bored
-  (:require [eliza.register :refer [register-responder!]]
-            [eliza.history  :refer [history]]))
+(ns elo-sport.responder.bored
+  (:require [elo-sport.register :refer [register-responder!]]
+            [elo-sport.history  :refer [history]]))
 
 (def bored-responses
   ["BOOOORING"

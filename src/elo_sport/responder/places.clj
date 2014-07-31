@@ -1,4 +1,4 @@
-(ns eliza.responder.places
+(ns elo-sport.responder.places
   (:require [funnyplaces.api :as places])
   (:require [clojure.contrib.pprint :as pprint])
   (:use [clojure.string :only (join)]))

@@ -1,5 +1,5 @@
-(ns eliza.responder.sleeper
-  (:require [eliza.register :refer [register-responder!]]
+(ns elo-sport.responder.sleeper
+  (:require [elo-sport.register :refer [register-responder!]]
             [clojure.string :as string]))
 
 (def sleeping? (atom false))
