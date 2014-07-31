@@ -46,8 +46,13 @@
      :body (str "Req: " req " Current session username: " (get-in req [:session :username]))}))
 
 
+(defn empty-handler
+  [req]
+  (resp/resource-response "ladder.html"))
+
 (defroutes elo-handlers
-  (GET "/" [] (resp/resource-response "ladder.html" {:root "public"}))
+  (GET "" [] empty-handler)
+  (GET "/" [] empty-handler)
   (POST "/login" [] login-handler)
   (GET "/hello" [] hello-handler)
   (route/not-found "Route not found."))
