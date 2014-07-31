@@ -28,14 +28,16 @@
 
 (defn login-handler
   [{:keys [params] :as req}]
-  (let [session (new-session (:username params))]
+  (let [session (if (contains? req :session)
+                  (:session req)
+                  (new-session (:username params)))]
     {:status 200
      :body (str session)
      :session session}))
 
 (defn hello-handler
   [{:keys [params] :as req}]
-  (let [session (new-session (:username params))]
+  (let [session (:session req)]
     {:status 200
      :body (str "Current session username: " (:username (:session req)))
      :session session}))
