@@ -48,7 +48,7 @@
 
 (defn empty-handler
   [req]
-  (resp/resource-response "ladder.html"))
+  (resp/resource-response "ladder.html" {:root "public"}))
 
 (defroutes elo-handlers
   (GET "" [] empty-handler)
