@@ -2,7 +2,7 @@
   (:use [ring.middleware params keyword-params resource session]
         [compojure.core])
   (:require [compojure.route :as route]
-            [elo-sport.core      :as elo]))
+            [elo-sport.core  :as elo]))
 
 (defn exception-str
   [e]
@@ -12,7 +12,7 @@
   [req]
   (:chat-session-id (:session req)))
 
-(defn say-something
+#_(defn say-something
   [{:keys [params] :as req}]
   (try
     {:status 200
@@ -21,32 +21,39 @@
       {:status 500
        :body   (exception-str e)})))
 
+(defn new-session
+  [username]
+  {:username username
+   :session-id (.toString (java.util.UUID/randomUUID))})
+
+(defn login-handler
+  [{:keys [params] :as req}]
+  (let [session (new-session (:username params))]
+    {:status 200
+     :body (str session)
+     :session session}))
+
+(defn hello-handler
+  [{:keys [params] :as req}]
+  (let [session (new-session (:username params))]
+    {:status 200
+     :body (str (:username (:session req)))
+     :session session}))
+
 (defroutes elo-handlers
-  (POST "/say" [] say-something)
-  (route/not-found "No such thing."))
+  (POST "/login" [] login-handler)
+  (GET "/hello" [] hello-handler)
+  (route/not-found "Route not found."))
 
 (defn wrap-dir-index [handler]
   (fn [req]
     (handler
      (update-in req [:uri]
-                #(if (= "/" %) "/chat.html" %)))))
-
-(defn new-chat-session
-  []
-  (.toString (java.util.UUID/randomUUID)))
-
-(defn wrap-make-session-if-none
-  [handler]
-  (fn [req]
-    (let [response (handler req)]
-      (if (:session/key req)
-        response
-        (assoc response :session {:chat-session-id (new-chat-session)})))))
+                #(if (= "/" %) "/ladder.html" %)))))
 
 (def app
   (-> elo-handlers
       (wrap-resource "public")
-      wrap-make-session-if-none
       wrap-session
       wrap-dir-index
       wrap-keyword-params
