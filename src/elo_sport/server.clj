@@ -49,7 +49,7 @@
   (fn [req]
     (handler
      (update-in req [:uri]
-                #(if (= "/" %) "/ladder.html" %)))))
+                "/pingpong-elo/ladder.html"))))
 
 (def app
   (-> elo-handlers
