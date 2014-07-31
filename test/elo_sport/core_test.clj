@@ -1,6 +1,6 @@
-(ns eliza.core-test
+(ns elo-sport.core-test
   (:require [clojure.test :refer :all]
-            [eliza.core   :refer :all]))
+            [elo-sport.core   :refer :all]))
 
 (deftest smoke-test
   (is (query "Hello, how are you?")))
