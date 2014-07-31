@@ -38,7 +38,7 @@
   [{:keys [params] :as req}]
   (let [session (:session req)]
     {:status 200
-     :body (str "Uri: " (get-in req [:uri]) " Current session username: " (get-in req [:session :username]))}))
+     :body (str "Req: " req " Current session username: " (get-in req [:session :username]))}))
 
 (defroutes elo-handlers
   (POST "/login" [] login-handler)
