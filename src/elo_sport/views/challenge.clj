@@ -32,20 +32,22 @@
   (html5
    (form-to
     [:post "update"]
-    [:div
-     "Opponent name: "
-     [:input {:type "text"
-              :name "opponent"}]
-     "Your score: "
-     [:input {:type "text"
-              :name "challenger-score"}]
-     "Opponent score: "
-     [:input {:type "text"
-              :name "opponent-score"}]
-     "Note: "
-     [:input {:type "text"
-              :name "note"}]
-     (submit-button "Update challenge")])))
+    "Opponent name: "
+    [:input {:type "text"
+             :name "opponent"}]
+    "<br>"
+    "Your score: "
+    [:input {:type "text"
+             :name "challenger-score"}]
+    "<br>"
+    "Opponent score: "
+    [:input {:type "text"
+             :name "opponent-score"}]
+    "<br>"
+    "Note: "
+    [:input {:type "text"
+             :name "note"}]
+    (submit-button "Update challenge"))))
 
 
 (defn update-challenge
