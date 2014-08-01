@@ -61,6 +61,7 @@
   (GET "/update-page" [] update-challenge-page)
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
+  (GET "/closed-challenges-page" [] closed-challenges-page)
   (route/not-found "Page not found."))
 
 
