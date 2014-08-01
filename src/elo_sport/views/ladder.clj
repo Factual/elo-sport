@@ -32,8 +32,8 @@
          (link-to "challenge-page" "Create challenge")
          "&nbsp;"
          (link-to "update-page"    "Update challenge")]
-
-        (link-to "login" "Log in")))
+        
+        [:div (link-to "login" "Log in")]))
 
     "<br>"
 
