@@ -33,15 +33,15 @@
 
 (defn challenge-handler
   [{:keys [params] :as req}]
-  (db/insert-match (:challenger params) (:opponent params)))
+  (str (db/insert-match (:challenger params) (:opponent params))))
 
 
 (defn update-challenge
   [{:keys [params] :as req}]
-  (apply db/update-match
-         (map params [:challenger :opponent
-                      :challenger-score :opponent-score
-                      :note])))
+  (str (apply db/update-match
+              (map params [:challenger :opponent
+                           :challenger-score :opponent-score
+                           :note]))))
 
 
 (defroutes elo-handlers
