@@ -48,8 +48,8 @@
   (GET "/" [] ladder-page)
   (POST "/login" [] login-handler)
   (POST "/logout" [] logout-handler)
-  (POST "/challenge" [] challenge-handler)
-  (POST "/update" [] update-challenge)
+  (GET "/challenge" [] challenge-handler)
+  (GET "/update" [] update-challenge)
   (route/not-found "Page not found."))
 
 
