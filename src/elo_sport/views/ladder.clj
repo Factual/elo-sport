@@ -48,10 +48,12 @@
          (link-to "challenge-page" "Create challenge")
          "&nbsp;&nbsp;"
          (link-to "update-page"    "Update challenge")
-         "&nbsp;&nbsp;"
-         (link-to "closed-challenges-page"    "Closed challenges")]
+         "&nbsp;&nbsp;"]
         
         [:div (link-to "login" "Log in")]))
+
+    "&nbsp;&nbsp;"
+    (link-to "closed-challenges-page"    "Closed challenges")
 
     "<br>"
 
