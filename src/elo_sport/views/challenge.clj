@@ -56,4 +56,5 @@
                    (:opponent params)
                    (:challenger-score params)
                    (:opponent-score params)
-                   (:note params)))
+                   (:note params))
+  (ladder-page req))
