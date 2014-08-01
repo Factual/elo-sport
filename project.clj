@@ -5,4 +5,5 @@
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler elo-sport.server/app}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [compojure "1.1.8"]])
+                 [compojure "1.1.8"]
+                 [hiccup "1.0.5"]])

@@ -1,9 +1,8 @@
 (ns elo-sport.server
-  (:use  [ring.middleware params keyword-params resource session])
+  (:use  [ring.middleware params keyword-params resource session]
+         [elo-sport.views ladder])
   (:require [compojure.core  :refer :all]
             [compojure.route :as route]
-            [elo-sport.score :as score]
-            [elo-sport.user  :as user]
             [ring.util.response :as resp]))
 
 
@@ -46,16 +45,11 @@
      :body (str "Req: " req " Current session username: " (get-in req [:session :username]))}))
 
 
-(defn empty-handler
-  [req]
-  (resp/resource-response "ladder.html" {:root "public"}))
-
 (defroutes elo-handlers
-  (GET "" [] empty-handler)
-  (GET "/" [] empty-handler)
+  (GET "/" [] (ladder-page))
   (POST "/login" [] login-handler)
   (GET "/hello" [] hello-handler)
-  (route/not-found "Route not found."))
+  (route/not-found "Page not found."))
 
 
 (def app

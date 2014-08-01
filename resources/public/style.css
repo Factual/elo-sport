@@ -1,0 +1,307 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+table { 
+  empty-cells: show;
+}
+
+a:link { 
+  color: #6699CC;
+  text-decoration: none;
+}
+a:visited { 
+  color: #6699CC;
+  text-decoration: none;
+}
+a:hover { 
+  text-decoration: underline;
+}
+a:active { 
+  color: #0066CC;
+}
+
+/***** OTHERS, GENERAL *****/
+
+.bigheader {
+  padding-bottom: 5px;
+  font-size: 1.7em;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.header {
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #003366;
+}
+
+.s_header {
+  padding: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #003366;
+}
+
+.indent {
+  margin: 10px;
+  padding: 0px;
+}
+
+div#datebox {
+  color: #d7d7d7;
+  background-color: #600000;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  padding: 2px;
+}
+
+.popup {
+  border-bottom:1px dotted;
+}
+
+.inChallenge {
+  font-style: italic;
+  color: #600000;
+}
+
+.player {
+  color: #FFCC00; 
+}
+
+.emph {
+  font-weight: bold;
+  color: #a00000;
+}
+
+
+/***** ANY PAGE *****/
+
+div#page {
+  position: absolute;
+  top: 75px;
+  width: 800;
+  padding: 15px;
+}
+
+/***** TABLE STATS *****/
+
+div#page table.stats {
+  font-size: .8em;
+  text-align: right;
+  border: 0px;
+  margin: 20px;
+  border-collapse: collapse;
+  font-family: Arial;
+}
+
+div#page table.stats th {
+  color: #FFFFFF;
+  background-color: #969696;
+  font-weight: normal;
+}
+
+div#page table.stats th.caption {
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+  background-color: #666666;
+  color: #FFCC00;
+}
+
+div#page table.stats th.p {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 150px;
+  text-align: left;
+}
+
+tr.o {
+  background-color: #EFEFEF;
+}
+
+tr.e {
+  background-color: #FFFFFF;
+}
+
+div#page table.stats td {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 50px;
+
+}
+
+div#page table.stats td.p {
+  color: #0066CC;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 150px;
+  text-align: left;
+
+ }
+
+/***** TABLE MATCHES *****/
+
+table.matches {
+  font-size: .8em;
+  border: 0px;
+  margin: 20px;
+  border-collapse: collapse;
+  font-family: Arial;
+}
+
+table.matches th.caption {
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+  background-color: #666666;
+  color: #FFCC00;
+}
+
+table.matches th {
+  background-color: #969696;
+  font-weight: normal;
+  text-align: left;
+}
+
+table.matches th.p {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 150px;
+  text-align: left;
+}
+
+table.matches td {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 80px;
+}
+
+table.matches td.p {
+  color: #0066CC;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 150px;
+  text-align: left;
+ }
+
+/***** TOP BOX *****/
+
+div#top {
+  color: #FFFFFF;
+  width: auto;
+  min-width: 1000px;
+  border-bottom-style: ridge;
+  padding: 10px 0px 5px 10px;
+  background-image: url(../css/grey.jpg);
+  background-repeat: repeat-x;
+  
+}
+
+/***** LEFT BOX *****/
+
+div#leftcolumn {
+
+  position: absolute;
+  height: 100%;
+  width: 190px;
+  top: 75px;
+  padding-top: 15px;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+  background-color: #d7d7d7;
+}
+
+div#leftcolumn ol {
+  font-size: .9em;
+  margin-right: 10px;
+
+}
+
+/***** MIDDLE BOX *****/
+
+div#content {
+  position: absolute;
+  width: 600px;
+  min-width: 600px;
+  top: 75px;
+  left: 190px;
+  padding-top: 15px;
+
+}
+
+div#content table.challenge {
+  table-layout: fixed;
+  width: 96%;
+  margin: 10px;
+  font-size: .9em;
+}
+
+div#content table.challenge th {
+  color: #600000;
+}
+
+div#content table.challenge td {
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+  padding-left: 3px;
+
+}
+
+div#content table.news {
+  width: 530px;
+}
+
+
+/***** RIGHT BOX *****/
+
+div#rightcolumn {
+  position: absolute;
+  width: 220px;
+  top: 75px;
+  left: 780px;
+  padding-top: 15px;
+
+}
+
+div#rightcolumn table.ridge {
+  border-style: ridge;
+  width: 100%;
+  margin: 10px;
+
+}
+
+div#rightcolumn table.inner {
+  border-bottom: 1px solid black;
+  table-layout: fixed;
+  width: 100%;
+  font-size: .85em;
+  color: #003366;
+  margin: 0px;
+  padding: 0px;
+  border-spacing: 0px;
+}
+
+div#rightcolumn table.inner.tr {
+  margin: 0px;
+  padding: 0px;
+}
+
+div#rightcolumn table.inner.td {
+  margin: 0px;
+  padding: 0px;
+  height: 0;
+}
+
+
+
+div#rightcolumn table td {
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
