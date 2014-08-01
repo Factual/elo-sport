@@ -2,7 +2,7 @@
   (:require [elo-sport.rating :as rating]
             [elo-sport.db :as db]
             [elo-sport.views 
-             [ladder :refer [ladder-page match-table]]]
+             [ladder :refer [ladder-page]]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
