@@ -8,7 +8,11 @@
              [form :refer :all]
              [core :refer :all]
              [page :refer :all]
-             [element :refer :all]]))
+             [element :refer :all]]
+            [ring.middleware
+             [session :refer [wrap-session]]
+             [params :refer [wrap-params]]
+             [keyword-params :refer [wrap-keyword-params]]]))
 
 
 (defn exception-str [e]
