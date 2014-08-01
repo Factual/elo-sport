@@ -69,14 +69,21 @@
    (let [matches (db/get-matches {:status :closed})
          sorted-matches (sort-by :played_at matches)]
      [:table
+      [:tr
+       [:th "Challenger"]
+       [:th "Opponent"]
+       [:th "Challenger score"]
+       [:th "Opponent score"]
+       [:th "Note"]
+       [:th "Played time"]]
       (map (fn [match]
              [:tr 
               [:td (:challenger match)]
               [:td (:opponent match)]
-              [:td (:challenger-score match)]
-              [:td (:opponent-score match)]
+              [:td (:challenger_score match)]
+              [:td (:opponent_score match)]
               [:td (:note match)]
               [:td (:played_at match)]])
            sorted-matches)])
    "<br>"
-   (link-to "ladder" "Ladder home")))
+   (link-to "" "Ladder home")))
