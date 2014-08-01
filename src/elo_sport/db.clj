@@ -6,7 +6,7 @@
   (:use monger.operators))
 
 ;; {:host ... :db ...}
-(def dbconfig (read-string (slurp "resources/dbconfig.clj")))
+(def dbconfig (read-string (slurp (clojure.java.io/resource "dbconfig.clj"))))
 (def conn (mg/connect {:host (:host dbconfig)}))
 (def db (mg/get-db conn (:db dbconfig)))
 
