@@ -66,7 +66,17 @@
 (defn closed-challenges-page
   [req]
   (html5
-   (let [matches (db/get-matches {:status :closed})]
-     (match-table matches :played_at))
+   (let [matches (db/get-matches {:status :closed})
+         sorted-matches (sort-by :played_at matches)]
+     [:table
+      (map (fn [[match]]
+             [:tr 
+              [:td (:challenger match)]
+              [:td (:opponent match)]
+              [:td (:challenger-score match)]
+              [:td (:opponent-score match)]
+              [:td (:note match)]
+              [:td (:played_at match)]])
+           sorted-matches)])
    "<br>"
    (link-to "ladder" "Ladder home")))
