@@ -1,6 +1,10 @@
 (ns elo-sport.views.ladder
-  (:use [hiccup form core page element])
-  (:require [elo-sport.rating :as rating]))
+  (:require [elo-sport.rating :as rating]
+            [hiccup
+             [form :refer :all]
+             [core :refer :all]
+             [page :refer :all]
+             [element :refer :all]]))
 
 
 (defn ladder-page [{:keys [params] :as req}]
