@@ -2,6 +2,7 @@
   (:require [elo-sport.db :as db]))
 
 (def K-FACTOR 32)
+(def START-RATING 1500)
 
 (defn get-all-players 
   []  
@@ -12,7 +13,7 @@
   (db/get-matches {:status :closed}))
 
 (defn generate-start-ratings [players]
-  (into {} (map #(hash-map (keyword %) 1500) players)))
+  (into {} (map #(hash-map (keyword %) START-RATING) players)))
 
 (defn qa [rating]
   (Math/pow 10 (/ rating 400)))
