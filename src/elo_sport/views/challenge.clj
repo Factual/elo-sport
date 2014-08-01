@@ -2,7 +2,7 @@
   (:require [elo-sport.rating :as rating]
             [elo-sport.db :as db]
             [elo-sport.views 
-             [ladder :refer [ladder-page]]]
+             [ladder :refer [ladder-page match-table]]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
@@ -63,21 +63,9 @@
   (ladder-page req))
 
 
-(defn match-table
-  [matches time-key]
-  (let [sorted-matches (sort-by time-key matches)]
-    [:table
-           (map (fn [[match]]
-                  [:tr 
-                   [:td (:challenger match)]
-                   [:td (:opponent match)]
-                   [:td (:challenger-score match)]
-                   [:td (:opponent-score match)]
-                   [:td (:note match)]
-                   [:td (time-key match)]])
-                sorted-matches)]))
-
 (defn closed-challenges-page
-  []
+  [req]
   (let [matches (db/get-matches {:status :closed})]
-    (match-table sorted-matches :played_at)))
+    (match-table sorted-matches :played_at))
+  "<br>"
+  (link-to "ladder" "Ladder home"))

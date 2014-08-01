@@ -1,6 +1,6 @@
 (ns elo-sport.views.ladder
   (:require [elo-sport.rating :as rating]
-            [elo-sport.views.challenge :as challenge]
+            [elo-sport.db :as db]
             [hiccup
              [form :refer :all]
              [core :refer :all]
@@ -16,6 +16,21 @@
               [player (/ (Math/round (* rating 10.0)) 10.0)]))))
 
 
+(defn match-table
+  [matches time-key]
+  (let [sorted-matches (sort-by time-key matches)]
+    [:table
+           (map (fn [[match]]
+                  [:tr 
+                   [:td (:challenger match)]
+                   [:td (:opponent match)]
+                   [:td (:challenger-score match)]
+                   [:td (:opponent-score match)]
+                   [:td (:note match)]
+                   [:td (time-key match)]])
+                sorted-matches)]))
+
+
 (defn ladder-page [{:keys [params] :as req}]
   (html5
    [:head
@@ -27,12 +42,14 @@
       (if username
 
         [:div "Player: " username
-         "&nbsp;"
+         "&nbsp;&nbsp;"
          (link-to "logout"         "Log out")
-         "&nbsp;"
+         "&nbsp;&nbsp;"
          (link-to "challenge-page" "Create challenge")
-         "&nbsp;"
-         (link-to "update-page"    "Update challenge")]
+         "&nbsp;&nbsp;"
+         (link-to "update-page"    "Update challenge")
+         "&nbsp;&nbsp;"
+         (link-to "closed-challenges-page"    "Closed challenges")]
         
         [:div (link-to "login" "Log in")]))
 
@@ -49,4 +66,4 @@
     "<br>"
 
   (let [matches (db/get-matches {:status :open})]
-    (challenge/match-table sorted-matches :created_at)))]))
+    (match-table matches :created_at))]))
