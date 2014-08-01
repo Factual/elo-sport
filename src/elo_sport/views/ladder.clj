@@ -7,7 +7,7 @@
     [:title "Factual Ping Pong Ladder"]]
    [:body
     [:h1 "Factual Ping Pong Ladder"]
-    (let [username (:username params)]
+    (let [username (get-in req [:session :username])]
       (if username
         [:div "Player: " username]
         (form-to [:post "login"]
