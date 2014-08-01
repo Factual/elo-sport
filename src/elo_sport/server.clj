@@ -54,6 +54,7 @@
 
 (defroutes elo-handlers
   (GET "/" [] ladder-page)
+  (GET "/ladder" [] ladder-page)
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)

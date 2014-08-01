@@ -86,4 +86,4 @@
               [:td (:played_at match)]])
            sorted-matches)])
    "<br>"
-   (link-to "/" "Ladder home")))
+   (link-to "ladder" "Ladder home")))
