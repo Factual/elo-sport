@@ -3,12 +3,17 @@
             [compojure.route :as route]
             [elo-sport.db :as db]
             [elo-sport.views
-             [ladder :refer [ladder-page]]]
+             [ladder :refer [ladder-page]]
+             [challenge :refer :all]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
              [page :refer :all]
-             [element :refer :all]]))
+             [element :refer :all]]
+            [ring.middleware
+             [session :refer [wrap-session]]
+             [params :refer [wrap-params]]
+             [keyword-params :refer [wrap-keyword-params]]]))
 
 
 (defn exception-str [e]
@@ -31,32 +36,20 @@
     (if (and session (= username (:username session)))
       ;; already logged in
       (ladder-page req)
-      {:body (ladder-page req)
-       :session {:username username
-                 :session-id (.toString (java.util.UUID/randomUUID))}})))
+      (let [session {:username username
+                     :session-id (.toString (java.util.UUID/randomUUID))}]
+        {:body (ladder-page (assoc req :session session))
+         :session session}))))
 
 
 (defn logout-handler
   [req]
   (if (get-in req [:session :username])
-    {:body (ladder-page req)
-     :session {:username nil :session-id nil}}
+    (let [session {:username nil :session-id nil}]
+      {:body (ladder-page (assoc req :session session))
+       :session session})
+    ;; not logged in
     (ladder-page req)))
-
-
-(defn challenge-handler
-  [{:keys [params] :as req}]
-  (str (db/insert-match (:challenger params) (:opponent params))))
-
-
-(defn update-challenge
-  [{:keys [params] :as req}]
-  (str (db/update-match
-        (:challenger params)
-        (:opponent params)
-        (read-string (:challenger-score params))
-        (read-string (:opponent-score params))
-        (:note params))))
 
 
 (defroutes elo-handlers
@@ -64,8 +57,10 @@
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
-  (GET "/challenge" [] challenge-handler)
-  (GET "/update" [] update-challenge)
+  (GET "/challenge-page" [] create-challenge-page)
+  (GET "/update-page" [] update-challenge-page)
+  (POST "/challenge" [] create-challenge)
+  (POST "/update" [] update-challenge)
   (route/not-found "Page not found."))
 
 
