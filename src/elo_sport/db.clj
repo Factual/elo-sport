@@ -14,9 +14,15 @@
   [username email]
   (mc/insert db "players" {:username username :email email}))
 
+(defn calc-forfeit-date
+  [created-at]
+  nil)
+
 (defn insert-match
   [challenger opponent]
-   (mc/insert db "matches" {:challenger challenger :opponent opponent :created_at (System/currentTimeMillis) :status :open}))
+  (let [created-at (System/currentTimeMillis)
+        forfeit-date (calc-forfeit-date created-at)]
+    (mc/insert db "matches" {:challenger challenger :opponent opponent :created_at  :status :open})))
 
 
 (defn update-match
