@@ -5,7 +5,10 @@
              [form :refer :all]
              [core :refer :all]
              [page :refer :all]
-             [element :refer :all]]))
+             [element :refer :all]]
+            [clj-time
+             [format :as f]
+             [coerce :as c]]))
 
 
 (defn sorted-ratings []
@@ -14,6 +17,10 @@
        (sort-by second >)
        (map (fn [[player rating]]
               [player (/ (Math/round (* rating 10.0)) 10.0)]))))
+
+
+(defn format-timestamp [timestamp]
+  (f/unparse (f/formatters :date) (c/from-long timestamp)))
 
 
 (defn ladder-page [{:keys [params] :as req}]
@@ -60,10 +67,12 @@
        [:tr
         [:th "Challenger"]
         [:th "Opponent"]
-        [:th "Created time"]]
+        [:th "Created date"]
+        [:th "Forfeit date"]]
        (map (fn [match]
               [:tr 
                [:td (:challenger match)]
                [:td (:opponent match)]
-               [:td (:created_at match)]])
+               [:td (format-timestamp (:created_at match))]
+               [:td (format-timestamp (:forfeit_date match))]])
             sorted-matches)])]))

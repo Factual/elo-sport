@@ -2,12 +2,13 @@
   (:require [elo-sport.rating :as rating]
             [elo-sport.db :as db]
             [elo-sport.views 
-             [ladder :refer [ladder-page]]]
+             [ladder :refer [ladder-page format-timestamp]]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
              [page :refer :all]
-             [element :refer :all]]))
+             [element :refer :all]]
+            [clj-time.core :as time]))
 
 
 (defn create-challenge-page 
@@ -75,7 +76,7 @@
        [:th "Challenger Score"]
        [:th "Opponent Score"]
        [:th "Note"]
-       [:th "Played time"]]
+       [:th "Played date"]]
       (map (fn [match]
              [:tr 
               [:td (:challenger match)]
@@ -83,7 +84,7 @@
               [:td (:challenger_score match)]
               [:td (:opponent_score match)]
               [:td (:note match)]
-              [:td (:played_at match)]])
+              [:td (format-timestamp (:played_at match))]])
            sorted-matches)])
    "<br>"
    (link-to "ladder" "Ladder home")))
