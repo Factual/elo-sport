@@ -65,7 +65,8 @@
 
 (defn closed-challenges-page
   [req]
-  (let [matches (db/get-matches {:status :closed})]
-    (match-table matches :played_at))
-  "<br>"
-  (link-to "ladder" "Ladder home"))
+  (html5
+   (let [matches (db/get-matches {:status :closed})]
+     (match-table matches :played_at))
+   "<br>"
+   (link-to "ladder" "Ladder home")))
