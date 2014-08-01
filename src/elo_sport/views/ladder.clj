@@ -55,7 +55,7 @@
     (let [matches (db/get-matches {:status :open})
           sorted-matches (sort-by :created_at matches)]
       [:table
-       (map (fn [[match]]
+       (map (fn [match]
               [:tr 
                [:td (:challenger match)]
                [:td (:opponent match)]

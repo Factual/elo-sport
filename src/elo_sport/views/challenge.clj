@@ -69,7 +69,7 @@
    (let [matches (db/get-matches {:status :closed})
          sorted-matches (sort-by :played_at matches)]
      [:table
-      (map (fn [[match]]
+      (map (fn [match]
              [:tr 
               [:td (:challenger match)]
               [:td (:opponent match)]
