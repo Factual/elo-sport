@@ -46,7 +46,7 @@
 
 
 (defroutes elo-handlers
-  (GET "/" [] (ladder-page))
+  (GET "/" [] ladder-page)
   (POST "/login" [] login-handler)
   (GET "/hello" [] hello-handler)
   (route/not-found "Page not found."))
