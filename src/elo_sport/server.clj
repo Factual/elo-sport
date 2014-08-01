@@ -1,22 +1,21 @@
 (ns elo-sport.server
-  (:use [ring.middleware params keyword-params resource session]
-        [compojure.core])
-  (:require [compojure.route :as route]
-            [elo-sport.core  :as elo]))
+  (:use  [ring.middleware params keyword-params resource session]
+         [elo-sport.views ladder])
+  (:require [compojure.core  :refer :all]
+            [compojure.route :as route]
+            [ring.util.response :as resp]))
+
 
 (defn exception-str
   [e]
   (with-out-str (.printStackTrace e (java.io.PrintWriter. *out*))))
 
-(defn chat-session-id
-  [req]
-  (:chat-session-id (:session req)))
 
-#_(defn say-something
+#_(defn foo
   [{:keys [params] :as req}]
   (try
     {:status 200
-     :body   (str (elo/query (:input params) (chat-session-id req)))}
+     :body   (str nil)}
     (catch Exception e
       {:status 500
        :body   (exception-str e)})))
@@ -26,37 +25,36 @@
   {:username username
    :session-id (.toString (java.util.UUID/randomUUID))})
 
+
 (defn login-handler
   [{:keys [params] :as req}]
-  (let [session (if (contains? req :session)
-                  (:session req)
-                  (new-session (:username params)))]
-    {:status 200
-     :body (str session)
-     :session session}))
+  (let [username (:username params)
+        session (:session req)]
+    (if (and session (= username (:username session)))
+      {:status 200
+       :body "Already logged in."}
+      {:status 200
+       :body "Logged in."
+       :session (new-session username)})))
+
 
 (defn hello-handler
   [{:keys [params] :as req}]
   (let [session (:session req)]
     {:status 200
-     :body (str "Current session username: " (:username (:session req)))
-     :session session}))
+     :body (str "Req: " req " Current session username: " (get-in req [:session :username]))}))
+
 
 (defroutes elo-handlers
+  (GET "/" [] (ladder-page))
   (POST "/login" [] login-handler)
   (GET "/hello" [] hello-handler)
-  (route/not-found "Route not found."))
+  (route/not-found "Page not found."))
 
-(defn wrap-dir-index [handler]
-  (fn [req]
-    (handler
-     (update-in req [:uri]
-                #(if (= "/" %) "/ladder.html" %)))))
 
 (def app
   (-> elo-handlers
       (wrap-resource "public")
       wrap-session
-      wrap-dir-index
       wrap-keyword-params
       wrap-params))

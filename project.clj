@@ -7,4 +7,6 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.8"]
                  [com.novemberain/monger "2.0.0"]
-                 [org.clojure/core.async "0.1.303.0-886421-alpha"]])
+                 [org.clojure/core.async "0.1.303.0-886421-alpha"]
+                 [hiccup "1.0.5"]])
+
