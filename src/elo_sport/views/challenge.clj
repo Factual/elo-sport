@@ -32,21 +32,24 @@
   (html5
    (form-to
     [:post "update"]
-    "Opponent name: "
-    [:input {:type "text"
-             :name "opponent"}]
+    [:table
+     [:tr
+      [:td "Opponent name: "]
+      [:td [:input {:type "text"
+                    :name "opponent"}]]]
+     [:tr
+      [:td "Your score: "]
+      [:td [:input {:type "text"
+                    :name "challenger-score"}]]]
+     [:tr
+      [:td "Opponent score: "]
+      [:td [:input {:type "text"
+                    :name "opponent-score"}]]]
+     [:tr
+      [:td "Note: "]
+      [:td [:input {:type "text"
+                    :name "note"}]]]]
     "<br>"
-    "Your score: "
-    [:input {:type "text"
-             :name "challenger-score"}]
-    "<br>"
-    "Opponent score: "
-    [:input {:type "text"
-             :name "opponent-score"}]
-    "<br>"
-    "Note: "
-    [:input {:type "text"
-             :name "note"}]
     (submit-button "Update challenge"))))
 
 
@@ -54,7 +57,7 @@
   [{:keys [params] :as req}]
   (db/update-match (get-in req [:session :username])
                    (:opponent params)
-                   (:challenger-score params)
-                   (:opponent-score params)
+                   (read-string (:challenger-score params))
+                   (read-string (:opponent-score params))
                    (:note params))
   (ladder-page req))
