@@ -1,5 +1,5 @@
 (ns elo-sport.views.ladder
-  (:use [hiccup core page]))
+  (:use [hiccup form core page]))
 
 (defn ladder-page []
   (html5
