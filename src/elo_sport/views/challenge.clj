@@ -72,8 +72,8 @@
       [:tr
        [:th "Challenger"]
        [:th "Opponent"]
-       [:th "Challenger score"]
-       [:th "Opponent score"]
+       [:th "Challenger Score"]
+       [:th "Opponent Score"]
        [:th "Note"]
        [:th "Played time"]]
       (map (fn [match]
@@ -86,4 +86,4 @@
               [:td (:played_at match)]])
            sorted-matches)])
    "<br>"
-   (link-to "" "Ladder home")))
+   (link-to "/" "Ladder home")))
