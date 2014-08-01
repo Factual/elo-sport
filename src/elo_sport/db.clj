@@ -1,6 +1,7 @@
 (ns elo-sport.db
   (:require [monger.core :as mg]
-            [monger.collection :as mc])
+            [monger.collection :as mc]
+            )
   (:import [org.bson.types ObjectId]
            [com.mongodb DB WriteConcern])
   (:use monger.operators))
@@ -31,7 +32,8 @@
 
 (defn calc-forfeit-date
   [created-at opponent]
-  (let [opponent-open-matches (find-open-matches opponent)]
+  (let [opponent-open-matches (find-open-matches-for-player opponent)
+        ]
     nil))
 
 (defn insert-match

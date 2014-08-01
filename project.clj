@@ -7,5 +7,6 @@
                  [compojure "1.1.8"]
                  [com.novemberain/monger "2.0.0"]
                  [com.draines/postal "1.11.1"]
+                 [clj-time "0.8.0"]
                  [hiccup "1.0.5"]])
 
