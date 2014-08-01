@@ -15,7 +15,7 @@
               [player (/ (Math/round (* rating 10.0)) 10.0)]))))
 
 
-(defn ladder-page [{:keys [params] :as req}]
+#_(defn ladder-page [{:keys [params] :as req}]
   (html5
    [:head
     [:title "Factual Ping Pong Ladder"]]
@@ -38,3 +38,10 @@
                [:td player]
                [:td rating]])
             ratings)])]))
+
+(defn ladder-page [{:keys [params] :as req}]
+  (html5
+   [:head
+    [:title "Factual Ping Pong Ladder"]]
+   [:body
+    [:h1 "Factual Ping Pong Ladder"]]))
