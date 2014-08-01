@@ -38,10 +38,12 @@
 
 (defn update-challenge
   [{:keys [params] :as req}]
-  (str (apply db/update-match
-              (map params [:challenger :opponent
-                           :challenger-score :opponent-score
-                           :note]))))
+  (str (db/update-match
+        (:challenger req)
+        (:opponent req)
+        (read-string (:challenger-score req))
+        (read-string (:opponent-score req))
+        (:note req))))
 
 
 (defroutes elo-handlers
