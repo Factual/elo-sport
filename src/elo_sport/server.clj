@@ -4,7 +4,7 @@
             [elo-sport.db :as db]
             [elo-sport.views
              [ladder :refer [ladder-page]]
-             [challenge :refer [create-challenge-page update-challenge-page]]]
+             [challenge :refer :all]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
@@ -57,8 +57,10 @@
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
-  (GET "/challenge" [] create-challenge-page)
-  (GET "/update" [] update-challenge-page)
+  (GET "/challenge-page" [] create-challenge-page)
+  (GET "/update-page" [] update-challenge-page)
+  (POST "/challenge" [] create-challenge)
+  (POST "/update" [] update-challenge)
   (route/not-found "Page not found."))
 
 

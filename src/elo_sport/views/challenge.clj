@@ -20,13 +20,15 @@
              :name "opponent"}]
     (submit-button "Submit Challenge"))))
 
+
 (defn create-challenge
   [{:keys [params] :as req}]
   (db/insert-match (get-in req [:session :username]) (:opponent params))
   (ladder-page req))
 
+
 (defn update-challenge-page 
-[{:keys [params] :as req}]
+  [{:keys [params] :as req}]
   (html5
    (form-to
     [:post "update"]
@@ -38,6 +40,7 @@
              :name "challenger-score"}]
     [:input {:type "text"
              :name "note"}])))
+
 
 (defn update-challenge
   [{:keys [params] :as req}]

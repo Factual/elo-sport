@@ -25,9 +25,9 @@
     (let [username (get-in req [:session :username])]
       (if username
         [:div "Player: " username
-         (link-to "logout"    "Log out")
-         (link-to "challenge" "Create challenge")
-         (link-to "update"    "Update challenge")]
+         (link-to "logout"         "Log out")
+         (link-to "challenge-page" "Create challenge")
+         (link-to "update-page"    "Update challenge")]
 
         (link-to "login" "Log in")))
 
