@@ -24,12 +24,18 @@
 
     (let [username (get-in req [:session :username])]
       (if username
+
         [:div "Player: " username
+         "&nbsp;"
          (link-to "logout"         "Log out")
+         "&nbsp;"
          (link-to "challenge-page" "Create challenge")
+         "&nbsp;"
          (link-to "update-page"    "Update challenge")]
 
         (link-to "login" "Log in")))
+
+    "<br>"
 
     (let [ratings (sorted-ratings)]
       [:table
