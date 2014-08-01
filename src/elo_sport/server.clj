@@ -35,16 +35,19 @@
     (if (and session (= username (:username session)))
       ;; already logged in
       (ladder-page req)
-      {:body (ladder-page req)
-       :session {:username username
-                 :session-id (.toString (java.util.UUID/randomUUID))}})))
+      (let [session {:username username
+                     :session-id (.toString (java.util.UUID/randomUUID))}]
+        {:body (ladder-page (assoc req :session session))
+         :session session}))))
 
 
 (defn logout-handler
   [req]
   (if (get-in req [:session :username])
-    {:body (ladder-page req)
-     :session {:username nil :session-id nil}}
+    (let [session {:username nil :session-id nil}]
+      {:body (ladder-page (assoc req :session session))
+       :session session})
+    ;; not logged in
     (ladder-page req)))
 
 
