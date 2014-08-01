@@ -1,5 +1,6 @@
 (ns elo-sport.views.ladder
-  (:use [hiccup form core page]))
+  (:use [hiccup form core page element]))
+
 
 (defn ladder-page [{:keys [params] :as req}]
   (html5
@@ -9,9 +10,6 @@
     [:h1 "Factual Ping Pong Ladder"]
     (let [username (get-in req [:session :username])]
       (if username
-        [:div "Player: " username]
-        (form-to [:post "login"]
-                 "Player name: "
-                 [:input {:type "text"
-                          :name "username"}]
-                 (submit-button "Log in"))))]))
+        [:div "Player: " username
+         (link-to "logout" "Log out")]
+        (link-to "login" "Log in")))]))
