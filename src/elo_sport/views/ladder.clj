@@ -21,13 +21,18 @@
     [:title "Factual Ping Pong Ladder"]]
    [:body
     [:h1 "Factual Ping Pong Ladder"]
+
     (let [username (get-in req [:session :username])]
       (if username
         [:div "Player: " username
-         (link-to "logout" "Log out")]
+         (link-to "logout"    "Log out")
+         (link-to "challenge" "Create challenge")
+         (link-to "update"    "Update challenge")]
+
         (link-to "login" "Log in")))
+
     (let [ratings (sorted-ratings)]
-      [:table (:style "border: 1")
+      [:table
        (map (fn [[player rating]]
               [:tr
                [:td player]

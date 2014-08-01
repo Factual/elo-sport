@@ -3,7 +3,8 @@
             [compojure.route :as route]
             [elo-sport.db :as db]
             [elo-sport.views
-             [ladder :refer [ladder-page]]]
+             [ladder :refer [ladder-page]]
+             [challenge :refer [create-challenge-page update-challenge-page]]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
@@ -51,28 +52,13 @@
     (ladder-page req)))
 
 
-(defn challenge-handler
-  [{:keys [params] :as req}]
-  (str (db/insert-match (:challenger params) (:opponent params))))
-
-
-(defn update-challenge
-  [{:keys [params] :as req}]
-  (str (db/update-match
-        (:challenger params)
-        (:opponent params)
-        (read-string (:challenger-score params))
-        (read-string (:opponent-score params))
-        (:note params))))
-
-
 (defroutes elo-handlers
   (GET "/" [] ladder-page)
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
-  (GET "/challenge" [] challenge-handler)
-  (GET "/update" [] update-challenge)
+  (GET "/challenge" [] create-challenge-page)
+  (GET "/update" [] update-challenge-page)
   (route/not-found "Page not found."))
 
 
