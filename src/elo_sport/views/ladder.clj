@@ -1,5 +1,6 @@
 (ns elo-sport.views.ladder
   (:require [elo-sport.rating :as rating]
+            [elo-sport.views.challenge :as challenge]
             [hiccup
              [form :refer :all]
              [core :refer :all]
@@ -43,4 +44,9 @@
               [:tr
                [:td player]
                [:td rating]])
-            ratings)])]))
+            ratings)])
+
+    "<br>"
+
+  (let [matches (db/get-matches {:status :open})]
+    (challenge/match-table sorted-matches :created_at)))]))

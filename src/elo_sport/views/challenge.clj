@@ -61,3 +61,23 @@
                    (read-string (:opponent-score params))
                    (:note params))
   (ladder-page req))
+
+
+(defn match-table
+  [matches time-key]
+  (let [sorted-matches (sort-by time-key matches)]
+    [:table
+           (map (fn [[match]]
+                  [:tr 
+                   [:td (:challenger match)]
+                   [:td (:opponent match)]
+                   [:td (:challenger-score match)]
+                   [:td (:opponent-score match)]
+                   [:td (:note match)]
+                   [:td (time-key match)]])
+                sorted-matches)]))
+
+(defn closed-challenges-page
+  []
+  (let [matches (db/get-matches {:status :closed})]
+    (match-table sorted-matches :played_at)))
