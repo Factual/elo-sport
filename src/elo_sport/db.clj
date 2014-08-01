@@ -1,7 +1,8 @@
 (ns elo-sport.db
   (:require [monger.core :as mg]
             [monger.collection :as mc]
-            )
+            [clj-time.core :as time]
+            [clj-time.coerce :as translate-time])
   (:import [org.bson.types ObjectId]
            [com.mongodb DB WriteConcern])
   (:use monger.operators))
@@ -11,6 +12,7 @@
 (def conn (mg/connect {:host (:host dbconfig)}))
 (def db (mg/get-db conn (:db dbconfig)))
 (def extra-days-per-challenge 1)
+(def extra-days-standard 2)
 
 (defn insert-player
   [username email]
@@ -25,25 +27,56 @@
   (mc/find-maps db "matches" query))
 
 (defn find-open-matches-for-player
-  [player]
-  (let [username (:username player)]
-    (get-matches {$or [{:challenger username :status :open}
-                       {:opponent username :status :open}]})))
+  [player-username]
+  (get-matches {$or [{:challenger player-username :status :open}
+                     {:opponent player-username :status :open}]}))
+
+(defn decrement-extra-week-days
+  [dow extra-week-days]
+  (if (or (= 5 dow)
+          (= 6 dow))
+    extra-week-days
+    (- extra-week-days 1)))
+
+(defn add-day
+  [dow]
+  (if (= dow 7)
+    1
+    (+ 1 dow)))
+
+(defn ewdted-helper
+  [dow extra-week-days days]
+  (let [next-extra-week-days (decrement-extra-week-days dow extra-week-days)]
+    (if (= 0 extra-week-days)
+      days
+      (ewdted-helper (add-day dow) next-extra-week-days (+ 1 days)))))
+
+(defn extra-week-days-to-extra-days
+  [dow extra-week-days]
+  (if (= 0 extra-week-days)
+    0
+    (ewdted-helper dow extra-week-days 0)))
 
 (defn calc-forfeit-date
-  [created-at opponent]
-  (let [opponent-open-matches (find-open-matches-for-player opponent)
-        ]
-    nil))
+  [created-at opponent-username]
+  (let [num-opponent-open-matches (count (find-open-matches-for-player opponent-username))
+        created-date (translate-time/from-long created-at)
+        day-of-week (time/day-of-week created-date) ;;integer 1=monday 7=sunday
+        extra-week-days (+ extra-days-standard (* num-opponent-open-matches extra-days-per-challenge))
+        extra-days (extra-week-days-to-extra-days day-of-week extra-week-days)
+        forfeit-date (time/plus created-date (time/days (+ 1 extra-days)))
+        forfeit-date (time/date-midnight (time/year forfeit-date) (time/month forfeit-date) (time/day forfeit-date))
+        forfeit-timestamp (translate-time/to-long forfeit-date)]
+    forfeit-timestamp))
 
 (defn insert-match
-  [challenger opponent]
+  [challenger-username opponent-username]
   (let [created-at (System/currentTimeMillis)
-        forfeit-date (calc-forfeit-date created-at opponent)]
-    (mc/insert db "matches" {:challenger challenger :opponent opponent :created_at created-at :status :open})))
+        forfeit-date (calc-forfeit-date created-at opponent-username)]
+    (mc/insert db "matches" {:challenger challenger-username :opponent opponent-username :created_at created-at :status :open :forfeit_date forfeit-date})))
 
 
 (defn update-match
-  [challenger opponent challenger_score opponent_score note]
-  (mc/update db "matches" {:challenger challenger :opponent opponent :status :open}
-             {$set {:challenger_score challenger_score :opponent_score opponent_score :played_at (System/currentTimeMillis) :status :closed}}))
+  [challenger-username opponent-username challenger_score opponent_score note]
+  (mc/update db "matches" {:challenger challenger-username :opponent opponent-username :status :open}
+             {$set {:challenger_score challenger_score :opponent_score opponent_score :played_at (System/currentTimeMillis) :status :closed :note note}}))
