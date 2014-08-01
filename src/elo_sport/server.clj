@@ -3,7 +3,8 @@
          [elo-sport.views ladder])
   (:require [compojure.core  :refer :all]
             [compojure.route :as route]
-            [ring.util.response :as resp]))
+            [ring.util.response :as resp]
+            [elo-sport.db :as db]))
 
 
 (defn exception-str
@@ -28,6 +29,19 @@
     {:body "Logged out."
      :session {:username nil :session-id nil}}
     "Not logged in."))
+
+
+(defn challenge-handler
+  [{:keys [params] :as req}]
+  (db/insert-match (:challenger params) (:opponent params)))
+
+
+(defn update-challenge
+  [{:keys [params] :as req}]
+  (apply db/update-match
+         (map params [:challenger :opponent
+                      :challenger-score :opponent-score
+                      :note])))
 
 
 (defroutes elo-handlers
