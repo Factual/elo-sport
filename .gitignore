@@ -1,3 +1,4 @@
 .nrepl-port
 target/
 dbconfig.clj
+.lein-repl-history
