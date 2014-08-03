@@ -52,13 +52,6 @@
     (ladder-page req)))
 
 
-(defn default-handler [req]
-  (let [path-info (:path-info req)]
-    (if (re-find #"^/?(ladder)?$" path-info)
-      {:body (ladder-page req)}
-      (route/not-found "Route not found."))))
-
-
 (defroutes elo-handlers
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
@@ -68,7 +61,12 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  default-handler)
+
+  (fn [req]
+    (let [path-info (:path-info req)]
+      (if (re-find #"^/?(ladder)?$" path-info)
+        {:body (ladder-page req)}
+        (route/not-found "Route not found.")))))
 
 
 (def app
