@@ -54,10 +54,10 @@
 
 (defn default-handler [req]
   (let [path-info (:path-info req)]
-    (when (some (partial = path-info) ["" "/" "/ladder/"])
-;      (ring.util.response/redirect (str (:context req) "/ladder"))
+    (when (some (partial = path-info) ["" "/"])
+      (ring.util.response/redirect (str (:context req) "ladder"))
 ;      {:body (ladder-page req)}
-      {:status 200
+#_      {:status 200
        :body (str req)}
       )))
 
