@@ -72,7 +72,7 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-;  default-handler
+  default-handler
   (route/not-found "Route not found."))
 
 
