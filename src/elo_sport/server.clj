@@ -54,9 +54,10 @@
 
 (defn default-handler [req]
   (let [path-info (:path-info req)]
-    (when (re-find #"^/?(ladder)?/?$" path-info)
-      (ring.util.response/redirect (str (:context req) "/ladder"))
+    (when (some (partial = path-info) ["" "/" "/ladder/"])
+;      (ring.util.response/redirect (str (:context req) "/ladder"))
 ;      {:body (ladder-page req)}
+      {:body (str req)}
       )))
 
 
