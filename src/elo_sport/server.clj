@@ -55,10 +55,13 @@
 (defn default-handler [req]
   (let [path-info (:path-info req)]
     (when (re-find #"^/?(ladder)?/?$" path-info)
-      {:body (ladder-page req)})))
+      (ring.util.response/redirect "ladder")
+;      {:body (ladder-page req)}
+      )))
 
 
 (defroutes elo-handlers
+  (GET "/ladder" [] ladder-page)
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
@@ -69,6 +72,7 @@
   (GET "/closed-challenges-page" [] closed-challenges-page)
   default-handler
   (route/not-found "Route not found."))
+
 
 
 (def app
