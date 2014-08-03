@@ -65,10 +65,7 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  (fn [req]
-    {:status 404
-     :body (str req)})
-;  (route/not-found "Page not found.")
+  ladder-page
 )
 
 
