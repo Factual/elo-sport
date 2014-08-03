@@ -65,7 +65,7 @@
   (fn [{:keys [params] :as req}]
     (let [path-info (:path-info params)]
       {:status 200
-       :body (str "pi*" path-info "*")}))
+       :body (str "*" req "*")}))
 
   (route/not-found "Route not found.")
 )
