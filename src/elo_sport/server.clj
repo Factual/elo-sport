@@ -2,19 +2,19 @@
   (:require [compojure
              [core  :refer :all]
              [route :as route]]
-            [elo-sport.db :as db]
-            [elo-sport.views
-             [ladder :refer [ladder-page]]
-             [challenge :refer :all]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
              [page :refer :all]
              [element :refer :all]]
             [ring.middleware
-             [session :refer [wrap-session]]
-             [params :refer [wrap-params]]
-             [keyword-params :refer [wrap-keyword-params]]]))
+             [session :refer :all]
+             [params :refer :all]
+             [keyword-params :refer :all]]
+            [elo-sport.db :as db]
+            [elo-sport.views
+             [ladder :refer [ladder-page]]
+             [challenge :refer :all]]))
 
 
 ;; (defn exception-str [e]
@@ -55,7 +55,7 @@
 (defn default-handler [req]
   (let [path-info (:path-info req)]
     (when (re-find #"^/?(ladder)?/?$" path-info)
-      (ring.util.response/redirect "ladder")
+      (ring.util.response/redirect (str (:context req) "/ladder"))
 ;      {:body (ladder-page req)}
       )))
 
@@ -72,7 +72,6 @@
   (GET "/closed-challenges-page" [] closed-challenges-page)
   default-handler
   (route/not-found "Route not found."))
-
 
 
 (def app
