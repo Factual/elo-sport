@@ -52,6 +52,13 @@
     (ladder-page req)))
 
 
+(defn default-handler [{:keys [params] :as req}]
+  (let [path-info (:path-info params)]
+    (if (some (partial = path-info)
+              ["" "/" "/ladder"])
+      {:status 200
+       :body (ladder-page req)}
+      (route/not-found "Route not found."))))
 
 
 (defroutes elo-handlers
@@ -63,20 +70,7 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-
-  (fn [req]
-    {:status 200
-     :body (ladder-page req)})
-
-  #_  (fn [{:keys [params] :as req}]
-    (let [path-info (:path-info params)]
-      (if (some (partial = path-info)
-                ["" "/" "/ladder"])
-        {:body (ladder-page req)}
-        (route/not-found "Route not found."))))
-
-  (route/not-found "Route not found.")
-)
+  default-handler)
 
 
 (def app
