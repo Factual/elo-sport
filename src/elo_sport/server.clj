@@ -64,12 +64,19 @@
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
 
-  (fn [{:keys [params] :as req}]
+  (fn [req]
+    {:status 200
+     :body (ladder-page req)})
+
+  #_  (fn [{:keys [params] :as req}]
     (let [path-info (:path-info params)]
       (if (some (partial = path-info)
                 ["" "/" "/ladder"])
         {:body (ladder-page req)}
-        (route/not-found "Route not found.")))))
+        (route/not-found "Route not found."))))
+
+  (route/not-found "Route not found.")
+)
 
 
 (def app
