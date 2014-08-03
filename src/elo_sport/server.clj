@@ -64,7 +64,7 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  (ring.util.response/redirect "/ladder"))
+  (ring.util.response/redirect "ladder"))
 
 
 (def app
