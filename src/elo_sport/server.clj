@@ -64,10 +64,7 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  (fn [req]
-    {:status 200
-     :body "foo bar baz"})
-)
+  (ring.util.response/redirect "/ladder"))
 
 
 (def app
