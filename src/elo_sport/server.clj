@@ -1,6 +1,7 @@
 (ns elo-sport.server
-  (:require [compojure.core  :refer :all]
-            [compojure.route :as route]
+  (:require [compojure
+             [core  :refer :all]
+             [route :as route]]
             [elo-sport.db :as db]
             [elo-sport.views
              [ladder :refer [ladder-page]]
@@ -13,7 +14,8 @@
             [ring.middleware
              [session :refer [wrap-session]]
              [params :refer [wrap-params]]
-             [keyword-params :refer [wrap-keyword-params]]]))
+             [keyword-params :refer [wrap-keyword-params]]
+             [head :refer [wrap-head]]]))
 
 
 (defn exception-str [e]
@@ -63,7 +65,11 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  (route/not-found "Page not found."))
+  (fn [req]
+    {:status 404
+     :body (str req)})
+;  (route/not-found "Page not found.")
+)
 
 
 (def app
