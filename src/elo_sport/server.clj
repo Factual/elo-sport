@@ -52,16 +52,17 @@
     (ladder-page req)))
 
 
-(defn empty-handler [req]
+(defn ladder-synonym-handler [req]
+  ;; Redirects synonym URIs to /ladder, so relative links will always
+  ;; have the same base.
   (let [path-info (:path-info req)]
-    (when (some (partial = path-info) [""])
+    (when (some (partial = path-info) ["" "/" "/ladder/"])
       (ring.util.response/redirect (str (:context req) "/ladder")))))
 
 
 (defroutes elo-handlers
-  (GET "/" [] ladder-page)
   (GET "/ladder" [] ladder-page)
-  (GET "/ladder/" [] ladder-page)
+  ladder-synonym-handler
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
@@ -70,7 +71,6 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  empty-handler
   (route/not-found "Route not found."))
 
 
