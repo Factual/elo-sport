@@ -64,7 +64,9 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  ladder-page)
+  (fn [req]
+    {:status 200
+     :body (ladder-page req)}))
 
 
 (def app
