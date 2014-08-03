@@ -14,8 +14,7 @@
             [ring.middleware
              [session :refer [wrap-session]]
              [params :refer [wrap-params]]
-             [keyword-params :refer [wrap-keyword-params]]
-             [head :refer [wrap-head]]]))
+             [keyword-params :refer [wrap-keyword-params]]]))
 
 
 (defn exception-str [e]
@@ -65,7 +64,9 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  ladder-page
+  (fn [req]
+    {:status 200
+     :body "foo bar baz"})
 )
 
 
