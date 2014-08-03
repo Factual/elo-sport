@@ -52,18 +52,16 @@
     (ladder-page req)))
 
 
-(defn default-handler [req]
+(defn empty-handler [req]
   (let [path-info (:path-info req)]
-    (when (some (partial = path-info) ["" "/"])
-      (ring.util.response/redirect (str (:context req) "ladder"))
-;      {:body (ladder-page req)}
-#_      {:status 200
-       :body (str req)}
-      )))
+    (when (some (partial = path-info) [""])
+      (ring.util.response/redirect (str (:context req) "/ladder")))))
 
 
 (defroutes elo-handlers
+  (GET "/" [] ladder-page)
   (GET "/ladder" [] ladder-page)
+  (GET "/ladder/" [] ladder-page)
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
@@ -72,7 +70,7 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  default-handler
+  empty-handler
   (route/not-found "Route not found."))
 
 
