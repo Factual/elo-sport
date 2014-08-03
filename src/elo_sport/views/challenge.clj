@@ -2,7 +2,7 @@
   (:require [elo-sport.rating :as rating]
             [elo-sport.db :as db]
             [elo-sport.views 
-             [ladder :refer [ladder-page format-timestamp]]]
+             [ladder :refer [redirect-to-ladder format-timestamp]]]
             [hiccup
              [form :refer :all]
              [core :refer :all]
@@ -25,7 +25,7 @@
 (defn create-challenge
   [{:keys [params] :as req}]
   (db/insert-match (get-in req [:session :username]) (:opponent params))
-  (ladder-page req))
+  (redirect-to-ladder req))
 
 
 (defn update-challenge-page 
@@ -61,7 +61,7 @@
                    (read-string (:challenger-score params))
                    (read-string (:opponent-score params))
                    (:note params))
-  (ladder-page req))
+  (redirect-to-ladder req))
 
 
 (defn closed-challenges-page

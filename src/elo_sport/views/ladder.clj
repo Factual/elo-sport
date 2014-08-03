@@ -6,6 +6,7 @@
              [core :refer :all]
              [page :refer :all]
              [element :refer :all]]
+            [ring.util.response :refer [redirect]]
             [clj-time
              [format :as f]
              [coerce :as c]]))
@@ -21,6 +22,10 @@
 
 (defn format-timestamp [timestamp]
   (f/unparse (f/formatters :date) (c/from-long timestamp)))
+
+
+(defn redirect-to-ladder [req]
+      (redirect (str (:context req) "/ladder")))
 
 
 (defn ladder-page [{:keys [params] :as req}]

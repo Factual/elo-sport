@@ -1,5 +1,9 @@
 (ns elo-sport.server
-  (:require [compojure
+  (:require [elo-sport.db :as db]
+            [elo-sport.views
+             [ladder :refer [redirect-to-ladder ladder-page]]
+             [challenge :refer :all]]
+            [compojure
              [core  :refer :all]
              [route :as route]]
             [hiccup
@@ -10,12 +14,7 @@
             [ring.middleware
              [session :refer :all]
              [params :refer :all]
-             [keyword-params :refer :all]]
-            [ring.util.response :refer [redirect]]
-            [elo-sport.db :as db]
-            [elo-sport.views
-             [ladder :refer [ladder-page]]
-             [challenge :refer :all]]))
+             [keyword-params :refer :all]]))
 
 
 (defn login-page [req] 
@@ -26,10 +25,6 @@
     [:input {:type "text"
              :name "username"}]
     (submit-button "Log in"))))
-
-
-(defn redirect-to-ladder [req]
-      (redirect (str (:context req) "/ladder")))
 
 
 (defn authenticate-handler [{:keys [params] :as req}]
