@@ -64,10 +64,8 @@
 
   (fn [{:keys [params] :as req}]
     (let [path-info (:path-info params)]
-      (when (some (partial = path-info)
-                  ["" "/" "/ladder"])
-        {:status 200
-         :body (ladder-page req)})))
+      {:status 200
+       :body (ladder-page req)}))
 
   (route/not-found "Route not found.")
 )
