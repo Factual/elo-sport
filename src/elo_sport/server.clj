@@ -55,7 +55,7 @@
 (defn default-handler [req]
   (let [path-info (:path-info req)]
     (when (re-find #"^/?(ladder)?/?$" path-info)
-      (ladder-page req))))
+      {:body (ladder-page req)})))
 
 
 (defroutes elo-handlers
