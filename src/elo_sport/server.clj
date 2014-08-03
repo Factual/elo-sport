@@ -64,13 +64,9 @@
 
   (fn [req]
     (let [path-info (:path-info req)]
-      (when (some #(= path-info %)
-                  ["" "/" "/ladder"])
-        {:status 200
-         :body (ladder-page req)})))
-
-  (route/not-found "Route not found.")
-  )
+      (if (re-find #"/?(ladder)?$" path-info)
+        {:body (ladder-page req)}
+        (route/not-found "Route not found.")))))
 
 
 (def app
