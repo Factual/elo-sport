@@ -17,8 +17,8 @@
              [keyword-params :refer [wrap-keyword-params]]]))
 
 
-(defn exception-str [e]
-  (with-out-str (.printStackTrace e (java.io.PrintWriter. *out*))))
+;; (defn exception-str [e]
+;;   (with-out-str (.printStackTrace e (java.io.PrintWriter. *out*))))
 
 
 (defn login-page [req] 
@@ -43,8 +43,7 @@
          :session session}))))
 
 
-(defn logout-handler
-  [req]
+(defn logout-handler [req]
   (if (get-in req [:session :username])
     (let [session {:username nil :session-id nil}]
       {:body (ladder-page (assoc req :session session))
@@ -53,9 +52,12 @@
     (ladder-page req)))
 
 
+(defn default-handler [{:keys [params] :as req}]
+  {:status 200
+   :body (str req)})
+
+
 (defroutes elo-handlers
-  (GET "/" [] ladder-page)
-  (GET "/ladder" [] ladder-page)
   (GET "/login" [] login-page)
   (GET "/logout" [] logout-handler)
   (POST "/authenticate" [] authenticate-handler)
@@ -64,9 +66,8 @@
   (POST "/challenge" [] create-challenge)
   (POST "/update" [] update-challenge)
   (GET "/closed-challenges-page" [] closed-challenges-page)
-  (fn [req]
-    {:status 200
-     :body (ladder-page req)}))
+  default-handler
+  (route/not-found "Route not found."))
 
 
 (def app
