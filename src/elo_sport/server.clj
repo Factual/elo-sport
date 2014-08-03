@@ -11,14 +11,11 @@
              [session :refer :all]
              [params :refer :all]
              [keyword-params :refer :all]]
+            [ring.util.response :refer [redirect]]
             [elo-sport.db :as db]
             [elo-sport.views
              [ladder :refer [ladder-page]]
              [challenge :refer :all]]))
-
-
-;; (defn exception-str [e]
-;;   (with-out-str (.printStackTrace e (java.io.PrintWriter. *out*))))
 
 
 (defn login-page [req] 
@@ -31,25 +28,29 @@
     (submit-button "Log in"))))
 
 
+(defn redirect-to-ladder [req]
+      (redirect (str (:context req) "/ladder")))
+
+
 (defn authenticate-handler [{:keys [params] :as req}]
-  (let [username (:username params)
+  (let [ladder (redirect-to-ladder req)
+        username (:username params)
         session (:session req)]
     (if (and session (= username (:username session)))
       ;; already logged in
-      (ladder-page req)
+      ladder
       (let [session {:username username
                      :session-id (.toString (java.util.UUID/randomUUID))}]
-        {:body (ladder-page (assoc req :session session))
-         :session session}))))
+        (assoc ladder :session session)))))
 
 
 (defn logout-handler [req]
-  (if (get-in req [:session :username])
-    (let [session {:username nil :session-id nil}]
-      {:body (ladder-page (assoc req :session session))
-       :session session})
-    ;; not logged in
-    (ladder-page req)))
+  (let [ladder (redirect-to-ladder req)]
+    (if (get-in req [:session :username])
+      (let [session {:username nil :session-id nil}]
+        (assoc ladder :session session))
+      ;; not logged in
+      ladder)))
 
 
 (defn ladder-synonym-handler [req]
@@ -57,7 +58,7 @@
   ;; have the same base.
   (let [path-info (:path-info req)]
     (when (some (partial = path-info) ["" "/" "/ladder/"])
-      (ring.util.response/redirect (str (:context req) "/ladder")))))
+      (redirect-to-ladder req))))
 
 
 (defroutes elo-handlers
