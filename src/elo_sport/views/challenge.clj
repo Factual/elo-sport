@@ -1,6 +1,7 @@
 (ns elo-sport.views.challenge
   (:require [elo-sport.rating :as rating]
             [elo-sport.db :as db]
+            [elo-sport.challenge :as challenge]
             [elo-sport.views 
              [ladder :refer [redirect-to-ladder format-timestamp]]]
             [hiccup
@@ -15,16 +16,26 @@
 [{:keys [params] :as req}]
   (html5
    (form-to
+    {:id "challengeform"}
     [:post "challenge"]
-    "Opponent name: "
-    [:input {:type "text"
-             :name "opponent"}]
+    [:table
+     [:tr
+      [:td "Opponent name: "]
+      [:td [:input {:type "text"
+                    :name "opponent"}]]]
+     [:tr
+      [:td "Challenge Message: "]
+      [:td (text-area {:rows "10"
+                       :cols "30"
+                       :form "challengeform"} "chalmessage")]]]
     (submit-button "Create challenge"))))
 
-
+;;needs to call the challenge namespace functions
 (defn create-challenge
   [{:keys [params] :as req}]
-  (db/insert-match (get-in req [:session :username]) (:opponent params))
+  (challenge/create-challenge (get-in req [:session :username])
+                              (:opponent params)
+                              (:chalmessage params))
   (redirect-to-ladder req))
 
 
