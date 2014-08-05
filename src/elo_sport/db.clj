@@ -19,10 +19,16 @@
   (mc/insert db "players" {:username username :email email}))
 
 (defn get-players
+  "Query Examples: Find all players with username = 'Bob'
+      query=> {:username \"Bob\"}
+  Find all players with username = 'Bob' and email = bob@foo.com
+      query => {:username \"Bob\" :email \"bob@foo.com\"}"
   [query]
   (mc/find-maps db "players" query))
 
 (defn update-player
+  "Update players with username = Bob, to have email = 'bob@foo.com'
+     username \"Bob\" update => {:email \"bob@foo.com\"}"
   [username update]
   (mc/update db "players" {:username username} {$set update}))
 
@@ -84,3 +90,12 @@
   [challenger-username opponent-username challenger_score opponent_score note]
   (mc/update db "matches" {:challenger challenger-username :opponent opponent-username :status :open}
              {$set {:challenger_score challenger_score :opponent_score opponent_score :played_at (System/currentTimeMillis) :status :closed :note note}}))
+
+
+(defn admin-edit-challenges
+  "Example: Update open match with challenger username = Bob to be closed with opponent_score = 3, 
+  challenger_score = 0 and note = 'just an admin thing'
+      query => {:username \"Bob\" :status :open}
+      update => {:challenger_score 0 :opponent_score 3 :status :closed :not \"just an admin thing\"}"
+  [query update]
+  (mc/update db "matches" query {$set update}))
