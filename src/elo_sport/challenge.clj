@@ -10,10 +10,10 @@
   [challenger opponent message]
   (let [matches (db/get-matches {:status :open $or [{:challenger challenger :opponent opponent} {:challenger opponent :opponent challenger}]})
         insert-match-return (when (empty? matches) (db/insert-match challenger opponent))
-        ch-map (db/get-players {:username challenger})
-        op-map (db/get-players {:username opponent})
-        match (db/get-matches {:status :open :challenger challenger :opponent opponent})]
-    (when insert-match-return (email/send-challenge-email ch-map op-map (first match) message))))
+        ch-map (first (db/get-players {:username challenger}))
+        op-map (first (db/get-players {:username opponent}))
+        match (first (db/get-matches {:status :open :challenger challenger :opponent opponent}))]
+    (when insert-match-return (email/send-challenge-email ch-map op-map match message))))
 
 (defn update-challenge
   [challenger opponent challenger-score opponent-score note]
