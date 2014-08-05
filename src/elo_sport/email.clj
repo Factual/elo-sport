@@ -1,5 +1,11 @@
 (ns elo-sport.email
-  (:require [postal.core :as post]))
+  (:require [postal.core :as post]
+            [clj-time
+             [format :as f]
+             [coerce :as c]]))
+
+(defn format-timestamp [timestamp]
+  (f/unparse (f/formatters :date) (c/from-long timestamp)))
 
 (defn challenge-email-subject
   [challenger]
@@ -9,7 +15,7 @@
 (defn challenge-email-body
   [match chal-message]
   (str "Note: you must compete and update the challenge by "
-       (:forfeit_date match) " or the challenger moves up by forfeit.\n"
+       (format-timestamp (:forfeit_date match)) " or the challenger moves up by forfeit.\n"
        "------------------------\n" chal-message))
 
 (defn send-email

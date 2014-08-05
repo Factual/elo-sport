@@ -22,6 +22,10 @@
   [query]
   (mc/find-maps db "players" query))
 
+(defn update-player
+  [username update]
+  (mc/update db "players" {:username username} {$set update}))
+
 (defn get-matches
   [query]
   (mc/find-maps db "matches" query))
