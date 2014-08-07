@@ -92,10 +92,18 @@
              {$set {:challenger_score challenger_score :opponent_score opponent_score :played_at (System/currentTimeMillis) :status :closed :note note}}))
 
 
-(defn admin-edit-challenges
+(defn admin-query
+  [collection query]
+  (mc/find-maps db collection query))
+
+(defn admin-edit
   "Example: Update open match with challenger username = Bob to be closed with opponent_score = 3, 
   challenger_score = 0 and note = 'just an admin thing'
       query => {:username \"Bob\" :status :open}
       update => {:challenger_score 0 :opponent_score 3 :status :closed :not \"just an admin thing\"}"
-  [query update]
-  (mc/update db "matches" query {$set update}))
+  [collection query update]
+  (mc/update db collection query {$set update}))
+
+(defn get-collections
+  []
+  ["matches" "players"])
