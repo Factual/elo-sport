@@ -15,9 +15,7 @@
 (defn create-challenge-page 
 [{:keys [params] :as req}]
   (html5
-   (form-to
-    {:id "challengeform"}
-    [:post "challenge"]
+   (form-to [:post "create-challenge-post"]
     [:table
      [:tr
       [:td "Opponent name: "]
@@ -31,7 +29,7 @@
     (submit-button "Create challenge"))))
 
 ;;needs to call the challenge namespace functions
-(defn create-challenge
+(defn create-challenge-post
   [{:keys [params] :as req}]
   (challenge/create-challenge (get-in req [:session :username])
                               (:opponent params)
@@ -42,8 +40,7 @@
 (defn update-challenge-page 
   [{:keys [params] :as req}]
   (html5
-   (form-to
-    [:post "update"]
+   (form-to [:post "update-challenge-post"]
     [:table
      [:tr
       [:td "Opponent name: "]
@@ -65,7 +62,7 @@
     (submit-button "Update challenge"))))
 
 
-(defn update-challenge
+(defn update-challenge-post
   [{:keys [params] :as req}]
   (db/update-match (get-in req [:session :username])
                    (:opponent params)

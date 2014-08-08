@@ -35,24 +35,20 @@
    [:body
     [:h1 "Factual Ping Pong Ladder"]
 
-    (let [username (get-in req [:session :username])]
-      (if username
+    (concat [:div]
 
-        [:div "Player: " username
-         "&nbsp;&nbsp;"
-         (link-to "logout"         "Log out")
-         "&nbsp;&nbsp;"
-         (link-to "challenge-page" "Create challenge")
-         "&nbsp;&nbsp;"
-         (link-to "update-page"    "Update challenge")
-         "&nbsp;&nbsp;"
-         (link-to "closed-challenges-page"    "Closed challenges")]
-        
-        [:div
-         (link-to "login" "Log in")
-         "&nbsp;&nbsp;"
-         (link-to "closed-challenges-page"    "Closed challenges")]))
+     (let [username (get-in req [:session :username])]
+       (if username
 
+         ["Player: " username
+          "&nbsp;&nbsp;" (link-to "logout" "Log out")
+          "&nbsp;&nbsp;" (link-to "create-challenge-page" "Create challenge")
+          "&nbsp;&nbsp;" (link-to "update-challenge-page" "Update challenge")]
+         
+         [(link-to "login" "Log in")]))
+
+     ["&nbsp;&nbsp;" (link-to "closed-challenges-page" "Closed challenges")
+      "&nbsp;&nbsp;" (link-to "admin-page" "Admin")])
 
     "<br>"
 

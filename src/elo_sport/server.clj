@@ -20,14 +20,14 @@
 (defn login-page [req] 
   (html5
    (form-to
-    [:post "authenticate"]
+    [:post "login-post"]
     "Player name: "
     [:input {:type "text"
              :name "username"}]
     (submit-button "Log in"))))
 
 
-(defn authenticate-handler [{:keys [params] :as req}]
+(defn login-handler [{:keys [params] :as req}]
   (let [ladder (redirect-to-ladder req)
         username (:username params)
         session (:session req)]
@@ -59,14 +59,19 @@
 (defroutes elo-handlers
   (GET "/ladder" [] ladder-page)
   ladder-synonym-handler
-  (GET "/login" [] login-page)
-  (GET "/logout" [] logout-handler)
-  (POST "/authenticate" [] authenticate-handler)
-  (GET "/challenge-page" [] create-challenge-page)
-  (GET "/update-page" [] update-challenge-page)
-  (POST "/challenge" [] create-challenge)
-  (POST "/update" [] update-challenge)
-  (GET "/closed-challenges-page" [] closed-challenges-page)
+
+  (GET "/login"                  [] login-page)
+  (GET "/logout"                 [] logout-handler)
+  (GET "/create-challenge"       [] create-challenge-page)
+  (GET "/update-challenge"       [] update-challenge-page)
+  (GET "/closed-challenges"      [] closed-challenges-page)
+  (GET "/admin"                  [] admin-page)
+
+  (POST "/login-post"            [] login-handler)
+  (POST "/create-challenge-post" [] create-challenge-post)
+  (POST "/update-challenge-post" [] update-challenge-post)
+  (POST "/admin-post"            [] admin-post)
+
   (route/not-found "Route not found."))
 
 
